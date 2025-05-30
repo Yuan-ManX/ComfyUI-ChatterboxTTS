@@ -17,7 +17,7 @@ git clone https://github.com/Yuan-ManX/ComfyUI-ChatterboxTTS.git
 3. Install dependencies:
 ```
 cd ComfyUI-ChatterboxTTS
-
+pip install chatterbox-tts
 pip install -r requirements.txt
 ```
 
