@@ -77,6 +77,29 @@ class ChatterboxPrompt:
         return (prompt,)
 
 
+class LoadAudioPrompt:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "optional": {
+                "input_path": ("STRING", {"default": None}),
+            }
+        }
+
+    RETURN_TYPES = ("AUDIOPROMPT",)
+    RETURN_NAMES = ("audio_prompt_path",)
+    FUNCTION = "load_audio_prompt"
+    CATEGORY = "ChatterboxTTS"
+
+    def load_audio_prompt(self, input_path):
+        if input_path is None:
+            audio_prompt_path = None
+        else:
+            audio_prompt_path = input_path
+            
+        return (audio_prompt_path,)
+
+
 class ChatterboxTTS:
     @classmethod
     def INPUT_TYPES(s):
