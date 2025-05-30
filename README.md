@@ -25,4 +25,7 @@ pip install -r requirements.txt
 ## Model
 
 
-### Model Download
+### Download Pretrained Models
+
+Chatterbox TTS Pretrained [Models](https://huggingface.co/ResembleAI/chatterbox)
+
