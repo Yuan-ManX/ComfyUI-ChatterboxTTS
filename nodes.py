@@ -20,7 +20,7 @@ class LoadChatterboxTTSModel:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "model_path": ("STRING", {"default": "./ChatterboxTTS"}),
+                "model_path": ("STRING", {"default": "./ResembleAI/chatterbox"}),
                 "device": ("STRING", {"default": "cuda"}),
             }
         }
@@ -32,6 +32,26 @@ class LoadChatterboxTTSModel:
 
     def load_model(self, model_path):
         model = ChatterboxTTS.from_pretrained(device="cuda")
+        return (model,)
+
+
+class LoadChatterboxVCModel:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "model_path": ("STRING", {"default": "./ResembleAI/chatterbox"}),
+                "device": ("STRING", {"default": "cuda"}),
+            }
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("model",)
+    FUNCTION = "load_model"
+    CATEGORY = "ChatterboxTTS"
+
+    def load_model(self, model_path):
+        model = ChatterboxVC.from_pretrained(device="cuda")
         return (model,)
 
 
