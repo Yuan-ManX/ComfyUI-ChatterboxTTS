@@ -77,7 +77,7 @@ class ChatterboxPrompt:
         return (prompt,)
 
 
-class LoadAudioPrompt:
+class ChatterboxAudioPrompt:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -108,6 +108,7 @@ class ChatterboxTTS:
                 "model": ("MODEL",),
                 "prompt": ("PROMPT",),
                 "audio_prompt_path": ("AUDIOPROMPT",),
+                ""seed_num": ("INT", {"default": 0}),
                 "exaggeration": (
                     "FLOAT",
                     {
@@ -126,7 +127,6 @@ class ChatterboxTTS:
                         "step": 0.05,
                     },
                 ),
-                ""seed_num": ("INT", {"default": 0}),
                 "cfgw": (
                     "FLOAT",
                     {
@@ -145,7 +145,7 @@ class ChatterboxTTS:
     CATEGORY = "ChatterboxTTS"
 
     def generate_tts(self, model, prompt, audio_prompt_path, exaggeration, temperature, seed_num, cfgw):
-
+        
         if model is None:
             model = ChatterboxTTS.from_pretrained(device="cuda")
     
@@ -161,6 +161,44 @@ class ChatterboxTTS:
         )
     
         return (wav, model.sr)
+
+
+class LoadChatterboxAudio:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "audio_path": ("STRING", {"default": "YOUR_AUDIO.wav"}),
+            }
+        }
+
+    RETURN_TYPES = ("AUDIO",)
+    RETURN_NAMES = ("audio",)
+    FUNCTION = "input_audio"
+    CATEGORY = "ChatterboxTTS"
+
+    def input_audio(self, audio_path):
+        audio = audio_path
+        return (audio,)
+
+
+class LoadChatterboxTargetAudio:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "target_audio_path": ("STRING", {"default": "YOUR_TARGET_VOICE.wav"}),
+            }
+        }
+
+    RETURN_TYPES = ("TARGETVOICE",)
+    RETURN_NAMES = ("target_voice_path",)
+    FUNCTION = "input_target_audio"
+    CATEGORY = "ChatterboxTTS"
+
+    def input_target_audio(self, target_audio_path):
+        target_voice_path = target_audio_path
+        return (target_voice_path,)
 
 
 class ChatterboxVC:
