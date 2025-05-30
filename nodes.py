@@ -1,7 +1,7 @@
 import random
 import numpy as np
 import torch
-import torchaudio as ta
+import torchaudio
 
 from chatterbox.tts import ChatterboxTTS
 from chatterbox.vc import ChatterboxVC
@@ -139,8 +139,8 @@ class ChatterboxTTS:
             }
         }
 
-    RETURN_TYPES = ("TTS", "SR",)
-    RETURN_NAMES = ("tts", "sr",)
+    RETURN_TYPES = ("WAV", "SR",)
+    RETURN_NAMES = ("wav", "sr",)
     FUNCTION = "generate_tts"
     CATEGORY = "ChatterboxTTS"
 
@@ -159,8 +159,10 @@ class ChatterboxTTS:
             temperature=temperature,
             cfg_weight=cfgw,
         )
-    
-        return (wav, model.sr)
+
+        sr = model.sr
+        
+        return (wav, sr)
 
 
 class LoadChatterboxAudio:
@@ -212,8 +214,8 @@ class ChatterboxVC:
             }
         }
 
-    RETURN_TYPES = ("VC", "SR",)
-    RETURN_NAMES = ("vc", "sr",)
+    RETURN_TYPES = ("WAV", "SR",)
+    RETURN_NAMES = ("wav", "sr",)
     FUNCTION = "generate_vc"
     CATEGORY = "ChatterboxTTS"
 
@@ -225,6 +227,30 @@ class ChatterboxVC:
         wav = model.generate(
             audio, target_voice_path=target_voice_path,
         )
+
+        sr = model.sr
+        
+        return (wav, sr)
+
+
+class SaveChatterboxAudio:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "wav": ("WAV",),
+                "sr": ("SR",),
+                "save_path": ("STRING", {"default": "output_audio.wav"}),
+            }
+        }
+
+    RETURN_TYPES = ()
+    FUNCTION = "save_audio"
+    CATEGORY = "ChatterboxTTS"
+
+    def save_audio(self, wav, sr, save_path):
+
+        torchaudio.save(save_path, wav, sr)
     
-        return (wav, model.sr)
+        return ()
 
