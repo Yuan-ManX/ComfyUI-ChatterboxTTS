@@ -84,6 +84,7 @@ class ChatterboxTTS:
             "required": {
                 "model": ("MODEL",),
                 "prompt": ("PROMPT",),
+                "audio_prompt_path": ("AUDIOPROMPT",),
                 "exaggeration": (
                     "FLOAT",
                     {
@@ -120,7 +121,7 @@ class ChatterboxTTS:
     FUNCTION = "generate_tts"
     CATEGORY = "ChatterboxTTS"
 
-    def generate_tts(self, model, prompt, exaggeration, temperature, seed_num, cfgw):
+    def generate_tts(self, model, prompt, audio_prompt_path, exaggeration, temperature, seed_num, cfgw):
 
         if model is None:
             model = ChatterboxTTS.from_pretrained(device="cuda")
@@ -130,6 +131,7 @@ class ChatterboxTTS:
     
         wav = model.generate(
             prompt,
+            audio_prompt_path=audio_prompt_path,
             exaggeration=exaggeration,
             temperature=temperature,
             cfg_weight=cfgw,
