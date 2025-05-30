@@ -4,6 +4,7 @@ import torch
 import torchaudio as ta
 
 from chatterbox.tts import ChatterboxTTS
+from chatterbox.vc import ChatterboxVC
 
 
 def set_seed(seed: int):
@@ -34,7 +35,7 @@ class LoadChatterboxTTSModel:
         return (model,)
 
 
-class ChatterboxTTSPrompt:
+class ChatterboxPrompt:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -96,10 +97,10 @@ class ChatterboxTTS:
 
     RETURN_TYPES = ("TTS", "SR",)
     RETURN_NAMES = ("tts", "sr",)
-    FUNCTION = "generate"
+    FUNCTION = "generate_tts"
     CATEGORY = "ChatterboxTTS"
 
-    def generate(self, model, prompt, exaggeration, temperature, seed_num, cfgw):
+    def generate_tts(self, model, prompt, exaggeration, temperature, seed_num, cfgw):
 
         if model is None:
             model = ChatterboxTTS.from_pretrained(device="cuda")
@@ -112,6 +113,33 @@ class ChatterboxTTS:
             exaggeration=exaggeration,
             temperature=temperature,
             cfg_weight=cfgw,
+        )
+    
+        return (wav, model.sr)
+
+
+class ChatterboxVC:
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "model": ("MODEL",),
+                "target_voice_path": ("TARGETVOICE",),
+            }
+        }
+
+    RETURN_TYPES = ("VC", "SR",)
+    RETURN_NAMES = ("vc", "sr",)
+    FUNCTION = "generate_vc"
+    CATEGORY = "ChatterboxTTS"
+
+    def generate_vc(self, model, target_voice_path):
+
+        if model is None:
+            model = ChatterboxVC.from_pretrained(device="cuda")
+    
+        wav = model.generate(
+            audio, target_voice_path=target_voice_path,
         )
     
         return (wav, model.sr)
