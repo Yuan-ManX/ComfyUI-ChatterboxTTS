@@ -17,7 +17,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadChatterboxVCModel": "Load Chatterbox VC Model",
     "ChatterboxPrompt": "Chatterbox Prompt",
     "ChatterboxAudioPrompt": "Chatterbox Audio Prompt",
-    "ChatterboxTTS": Chatterbox TTS",
+    "ChatterboxTTS": "Chatterbox TTS",
     "LoadChatterboxAudio": "Load Chatterbox Audio",
     "LoadChatterboxTargetAudio": "Load Chatterbox Target Audio",
     "ChatterboxVC": "Chatterbox VC",
