@@ -124,6 +124,7 @@ class ChatterboxVC:
         return {
             "required": {
                 "model": ("MODEL",),
+                "audio": ("AUDIO",),
                 "target_voice_path": ("TARGETVOICE",),
             }
         }
@@ -133,7 +134,7 @@ class ChatterboxVC:
     FUNCTION = "generate_vc"
     CATEGORY = "ChatterboxTTS"
 
-    def generate_vc(self, model, target_voice_path):
+    def generate_vc(self, model, audio, target_voice_path):
 
         if model is None:
             model = ChatterboxVC.from_pretrained(device="cuda")
