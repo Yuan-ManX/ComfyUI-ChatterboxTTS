@@ -108,7 +108,7 @@ class ChatterboxTTS:
                 "model": ("MODEL",),
                 "prompt": ("PROMPT",),
                 "audio_prompt_path": ("AUDIOPROMPT",),
-                ""seed_num": ("INT", {"default": 0}),
+                "seed_num": ("INT", {"default": 0}),
                 "exaggeration": (
                     "FLOAT",
                     {
